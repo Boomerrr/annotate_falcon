@@ -54,7 +54,7 @@ Discord is already part of my day-to-day routine. But when it was updated, and I
 I've used Discord for 7 years and I've gotten so used to this mobile layout. My app finally automatically updated today, against my own wishes due to what I've heard about the new UI, and I've gotta say I'm confused and disappointed. What happened to swiping left to check the member list? I've gotta tap on the channel name now to check that? Never mind the fact that I can't find any semblance of a friends list anymore, and all of my direct messages are in that new bottom toolbar, unlike on PC.->feature request
 It's good but please upgrade it so that it can be used without network->feature request
 Easiest way to talk with people online atm.->irrelevant information
-it would be a 4 but the update is absolutely horrible. the new layout makes it look so cluttered, and the new call background is just why. it's so bad I can't even.->
+it would be a 4 but the update is absolutely horrible. the new layout makes it look so cluttered, and the new call background is just why. it's so bad I can't even.->feature request
 """
 # 模型路径
 model = "tiiuae/falcon-7b"
