@@ -1,0 +1,1 @@
+huggingface下载地址：https://huggingface.co/tiiuae/falcon-7b
