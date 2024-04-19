@@ -82,7 +82,7 @@ with open(output_file_path,"w",encoding='utf-8') as output_file:
         
         sequences = pipeline(
             requirement_prompt,
-            max_length=3072,
+            max_length=2560,
             do_sample=True,
             top_k=5,
             num_return_sequences=1,
