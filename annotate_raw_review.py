@@ -3,23 +3,29 @@ import os
 import torch
 
 import transformers
+import sys
 
+# 参数读取
+args = sys.argv
+model = args[1]
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
-# 待标注文件路径
+#tokenizer = AutoTokenizer.from_pretrained("./model-7b")
+#model = AutoModelForCausalLM.from_pretrained("./model-7b",device_map="auto")
+
+# 输入文件
 input_file_path = "./raw_data.txt"
 
-# 标注结果文件路径
+# 输出标注文件
 output_file_path = "./raw_data_output_ten-shot.txt"
 
 with open(input_file_path,"r",encoding="utf-8") as file:
     input_data = file.readlines()
 
-# 用少量数据测试
-#input_data=input_data[:10]
+# 少量测试样本
+# input_data=input_data[:10]
 
-# 提示词
 requirement_prompt = """Assuming you are a software requirements analyst 
 you are categorizing user comments into three categories (bug report, feature request, and irrelevant information).
 bug report refers to the failure of the original software functionality;
@@ -56,11 +62,10 @@ It's good but please upgrade it so that it can be used without network->feature 
 Easiest way to talk with people online atm.->irrelevant information
 it would be a 4 but the update is absolutely horrible. the new layout makes it look so cluttered, and the new call background is just why. it's so bad I can't even.->feature request
 """
-# 模型路径
-model = "tiiuae/falcon-7b"
+
+#model = "tiiuae/falcon-7b"
 tokenizer = AutoTokenizer.from_pretrained(model)
 
-# 初始化pipeline
 pipeline = transformers.pipeline(
     "text-generation",
     model=model,
@@ -70,20 +75,16 @@ pipeline = transformers.pipeline(
     device_map="auto",
 )
 
-# 开始标注
 with open(output_file_path,"w",encoding='utf-8') as output_file:
-
-    # 每一个待标数据 填充提示词
     for text in input_data:
         content = text.strip()
         input_text = requirement_prompt +"\n"+ content.strip() + "->"
         
-        # 数据生成
         sequences = pipeline(
             requirement_prompt,
-            max_length=2048,
+            max_length=3072,
             do_sample=True,
-            top_k=10,
+            top_k=5,
             num_return_sequences=1,
             eos_token_id=tokenizer.eos_token_id,
         )
@@ -91,10 +92,8 @@ with open(output_file_path,"w",encoding='utf-8') as output_file:
         seq = sequences[0]
         result = seq['generated_text'].split('->')[-1].split('\n')[0]
 
-        #print(f"Result: {result}")
+        print(f"Result: {result}")
 
-        print(result)
-        # 写入文件
         output_line = f"{content}\t{result}\n"
         output_file.write(output_line)
 
