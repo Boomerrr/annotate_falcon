@@ -6,10 +6,12 @@ step1：下载模型
 `./model-7b`  
 
 step2：安装依赖环境  
+`conda create -n FalconEnvi python=3.8.10`  
+`conda activate FalconEnvi `  
 `pip install -r requirements.txt `  
   
 step3：运行代码文件  
-`step2 python annotate_raw_review.py  `  
+`python annotate_raw_review.py  `  
   
 得到标注文件   
 `./raw_data_output_ten-shot.txt`  
